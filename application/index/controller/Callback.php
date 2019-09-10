@@ -24,6 +24,7 @@ class Callback extends Controller{
 	}
 
 	public function Oss(){
+		//trace('日志信息OSS','error');
 		ob_end_clean();
 		header('Content-Type: application/json');
 		$handllerObj = new CallbackHandler(file_get_contents("php://input"));

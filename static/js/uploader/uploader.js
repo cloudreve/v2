@@ -1302,14 +1302,15 @@ function QiniuJsSDK() {
 							}
 							if(uploadConfig.saveType == "oss"){
 								var str = err.response
-									  var a = $.parseXML(str);
-									   $(a).find('Error').each(function () {
-										  errTip = $(this).children('Message').text();
-										  var errorText = "Error";
-									  });
-								if(err.status == 203){
-									errTip = "上传失败，请检查空间容量、是否重名";
+								try {
+									parser=new DOMParser();
+									xmlDoc=parser.parseFromString(str,"text/xml");
+								}catch(e) {
+									errTip = "未知错误";
+									var errorText = "Error";
 								}
+								errTip = "回调失败";
+								var errorText = xmlDoc.getElementsByTagName("Message")[0].innerHTML;
 							}else if(uploadConfig.saveType == "s3" && err.status!=401){
 								var str = err.response
 								parser = new DOMParser();

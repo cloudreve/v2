@@ -1518,6 +1518,11 @@ plupload.Uploader = function(options) {
 					return;
 				}
 
+				if (xhr.status == 203) {
+					handleError();
+					return;
+				}
+
 				retries = up.settings.max_retries; // reset the counter
 
 				// Handle chunk response
