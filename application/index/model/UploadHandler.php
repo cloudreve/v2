@@ -450,7 +450,7 @@ class UploadHandler extends Model{
 			"content-length-range" =>"0,".$this->policyContent['max_size'],
 			"date" => $dateNow,
 			"ext-param"=>json_encode([
-				"path"=>cookie("path"),
+				"path"=> cookie("path_tmp"),
 				"uid" => $this->userId,
 				"pid" => $this->policyId,
 				]),
