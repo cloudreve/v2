@@ -31,12 +31,12 @@ class Upload extends Controller{
 	
 	public function Token(){
 		$uploadObj = new UploadHandler($this->userObj->groupData['policy_name'],$this->userObj->uid);
-		$upToken = $uploadObj->getToken();
+		$upToken = $uploadObj->getToken(input("get."));
 		if(!empty($uploadObj->upyunPolicy)){
 			return json([
 				"token" => $upToken,
 				"policy" => $uploadObj->upyunPolicy,
-				]);
+			]);
 		}
 		if(!empty($uploadObj->s3Policy)){
 			return json([
@@ -49,7 +49,7 @@ class Upload extends Controller{
 				"callBackKey" => $uploadObj->callBackKey,
 				]);
 		}
-		if(!$uploadObj->getToken()){
+		if(!$uploadObj->getToken(input("get."))){
 			return json([
 				"uptoken" => $uploadObj->ossToken,
 				"sign" => $uploadObj->ossSign,
@@ -58,7 +58,7 @@ class Upload extends Controller{
 				"callback" => $uploadObj->ossCallBack,
 				]);
 		}
-		return json(["uptoken" => $uploadObj->getToken()]);
+		return json(["uptoken" => $uploadObj->getToken(input("get."))]);
 	}
 
 	public function chunk(){

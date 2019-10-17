@@ -298,7 +298,7 @@ class UploadHandler extends Model{
 		return rtrim($returnValue, ",");
 	}
 
-	public function getToken(){
+	public function getToken($getData){
 		switch ($this->policyContent['policy_type']) {
 			case 'qiniu':
 				return $this->getQiniuToken();
@@ -313,7 +313,7 @@ class UploadHandler extends Model{
 				return $this->getOssToken();
 				break;
 			case 'upyun':
-				return $this->getUpyunToken();
+				return $this->getUpyunToken($getData);
 				break;
 			case 's3':
 				return $this->getS3Token();
@@ -433,7 +433,7 @@ class UploadHandler extends Model{
 	}
 
 
-	public function getUpyunToken(){
+	public function getUpyunToken($getData){
 		$callbackKey = $this->getRandomKey();
 		$sqlData = [
 		'callback_key' => $callbackKey,
@@ -449,6 +449,7 @@ class UploadHandler extends Model{
 			"notify-url" => $options["siteURL"]."Callback/Upyun",
 			"content-length-range" =>"0,".$this->policyContent['max_size'],
 			"date" => $dateNow,
+			'content-length'=> (int)$getData["length"],
 			"ext-param"=>json_encode([
 				"path"=> cookie("path_tmp"),
 				"uid" => $this->userId,

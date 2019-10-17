@@ -712,7 +712,7 @@ function QiniuJsSDK() {
 				logger.debug("get uptoken from: ", that.uptoken_url);
 				// TODO: use mOxie
 				var ajax = that.createAjax();
-				ajax.open('GET', that.uptoken_url+"?path="+encodeURIComponent(window.pathCache[file.id]),false);
+				ajax.open('GET', that.uptoken_url+"?path="+encodeURIComponent(window.pathCache[file.id])+"&length="+file.size,false);
 				ajax.setRequestHeader("If-Modified-Since", "0");
 				ajax.send();
 				// var ajax = new Promise(function(resolve, reject) {
